@@ -1,6 +1,6 @@
 _base_ = [
     '../_base_/models/faster_rcnn_r50_fpn.py',
-    '../_base_/datasets/voc0712_cocofmt.py',
+    '../_base_/datasets/coco.py',
     '../_base_/runtimes/default_runtime.py',
     '../_base_/schedules/default_schedule.py'
 ]
@@ -20,7 +20,7 @@ model = dict(
         type="NAPTRONRoiHead",
         bbox_head=dict(
             type="NAPTRONBBoxHead",
-            num_classes=20)
+            num_classes=80)
     ),
     test_cfg=dict(rcnn=dict(score_thr=score_thr))
 )

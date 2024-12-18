@@ -1,0 +1,2 @@
+#! /bin/bash
+python scripts/naptron/compute_uncertainty_bboxes.py work_dirs/outputs_dump/faster_rcnn_r50_fpn_voc0712_cocofmt_naptron_trainset_model_outputs.pkl config/naptron/faster_rcnn_r50_fpn_voc0712_cocofmt_naptron_trainset.py work_dirs/outputs_dump/faster_rcnn_naptron_voc2coco_model_outputs.pkl 2 -mean

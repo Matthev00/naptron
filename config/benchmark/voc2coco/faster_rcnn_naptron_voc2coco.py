@@ -5,11 +5,14 @@ _base_ = [
 ]
 
 custom_imports = dict(
-    imports=['safednn_naptron.uncertainty.coco_eval_ood',
-             'safednn_naptron.uncertainty.coco_ood_dataset',
-             'safednn_naptron.uncertainty.naptron.roi_head',
-             'safednn_naptron.uncertainty.naptron.bbox_head'],
-    allow_failed_imports=False)
+    imports=[
+        'safednn_naptron.uncertainty.coco_eval_ood',
+        'safednn_naptron.uncertainty.coco_ood_dataset',
+        'safednn_naptron.uncertainty.naptron.roi_head',
+        'safednn_naptron.uncertainty.naptron.bbox_head'
+    ],
+    allow_failed_imports=False
+)
 
 output_handler = dict(
     type="simple_dump"
@@ -22,13 +25,20 @@ model = dict(
         type="NAPTRONRoiHead",
         bbox_head=dict(
             type="NAPTRONBBoxHead",
-            num_classes=20)
+            num_classes=80
+        )
     ),
     test_cfg=dict(rcnn=dict(score_thr=score_thr))
 )
 
 dataset_type = 'CocoOODDataset'
-data = dict(
-    val=dict(type=dataset_type, filter_empty_gt=False),
-    test=dict(type=dataset_type, filter_empty_gt=False))
 
+data_root = 'data/nuimages/'
+data = dict(
+    test=dict(
+        type='CocoDataset',
+        ann_file=data_root + 'annotations/nuimages_v1.0-train_car_filtered_small.json',
+        img_prefix='',
+        samples_per_gpu=1
+    )
+)

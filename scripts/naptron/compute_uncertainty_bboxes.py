@@ -59,7 +59,7 @@ def get_tp_activations(certainties, activations, bboxes, labels, iou=0, score_th
     activations_bbox_fmt = [[activations[j][labels[j] == i] for i in range(len(bboxes[0]))] for j in range(len(bboxes))]
     mask = (certainties['tp_logit_certainty'][iou][0] > score_thr)
     train_tp_activations = torch.zeros((len(certainties['tp_img_id'][iou][0][mask]), activations[0].shape[-1]),
-                                       device='cuda')
+                                       device='cpu')
     train_tp_labels = np.zeros((len(certainties['tp_img_id'][iou][0][mask])))
 
     for i, img_id in tqdm(enumerate(certainties['tp_img_id'][iou][0][mask]), total=train_tp_labels.shape[0]):
@@ -181,7 +181,8 @@ if __name__ == '__main__':
     # load test patterns and bboxes
     test_results = load_outputs(args.test)
     test_bboxes, test_activations, shapes, test_labels = parse_nap_detector_outputs(test_results)
-    test_activations_tensor = torch.cat(test_activations).cuda()
+    device = torch.device("cpu")
+    test_activations_tensor = torch.cat(test_activations).to(device)
     test_labels_np = torch.cat(test_labels).numpy()
 
     test_activations_tensor, _ = prepare_patterns(test_activations_tensor, shapes, int(args.layer_id))
