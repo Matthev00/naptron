@@ -37,7 +37,7 @@ data_root = 'data/nuimages/'
 data = dict(
     test=dict(
         type='CocoDataset',
-        ann_file=data_root + 'annotations/nuimages_v1.0-train_car_filtered_small.json',
+        ann_file=data_root + 'annotations/nuimages_v1.0-train_car_filtered.json',
         img_prefix='',
         samples_per_gpu=1
     )
